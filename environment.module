@@ -1,0 +1,34 @@
+<?php
+/**
+ * @file
+ * Provides primary Drupal hook implementations.
+ *
+ * @author Jimmy Berry ("boombatower", http://drupal.org/user/214218)
+ */
+
+/**
+ * Implements hook_system_info_alter().
+ */
+function environment_system_info_alter(&$info, $file, $type) {
+  $environment = environment_get();
+  if (!empty($info['dependencies'])) {
+    if (!empty($info['dependencies'][$environment])) {
+      $info['dependencies'] = array_merge($info['dependencies'], $info['dependencies'][$environment]);
+    }
+    foreach ($info['dependencies'] as $key => $dependency) {
+      if (!is_numeric($key)) {
+        unset($info['dependencies'][$key]);
+      }
+    }
+  }
+}
+
+/**
+ * Get the current environment.
+ *
+ * @return
+ *   The current environmemt: production, staging, or development.
+ */
+function environment_get() {
+  return variable_get('environment', 'production');
+}

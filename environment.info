@@ -1,0 +1,5 @@
+name = Environment
+description = Provide environment setup utilities.
+package = Development
+version = 1.0
+core = 7.x
