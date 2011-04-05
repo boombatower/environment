@@ -24,6 +24,21 @@ function environment_system_info_alter(&$info, $file, $type) {
 }
 
 /**
+ * Implements hook_requirements().
+ */
+function environment_requirements($phase) {
+  if ($phase == 'runtime') {
+    return array(
+      'environment' => array(
+        'title' => t('Environment'),
+        'value' => environment_get(),
+        'severity' => REQUIREMENT_INFO,
+      ),
+    );
+  }
+}
+
+/**
  * Get the current environment.
  *
  * @return
